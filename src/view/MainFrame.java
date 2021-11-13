@@ -7,6 +7,7 @@ import utils.Searcher;
 import javax.management.BadStringOperationException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.html.HTML;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -119,12 +120,13 @@ public class MainFrame {
                     for (int i = 0; i < words.length; i++) {
                         Collector collector = new Collector(Searcher.search(words[i]));
                         String data = collector.CollectData();
-                        System.out.println(data.split("[\\[]+[ابپتثجچحخدذرزژسشصضطظعغفقکگمنوهی۰۱۲۳۴۵۶۷۸۹][]]").length);
-                        data = data.replaceAll("[\\[][۰۱۲۳۴۵۶۷۸۹]+[]]","");
-                        data = data.replaceAll("[(][.*][)]","");
+                        System.out.println(data.split("[\\[][۱۲۳۴۵۶۷۸۹]+[]]").length-data.split("[\\[({]+.*[])}]+").length);
+//                        data = data.replaceAll("[\\[][۱۲۳۴۵۶۷۸۹]+[]]","");
+                        data = data.replaceAll("[\\[({]+.*[])}]+","");
 //                        data = data.replaceAll("[\\[][ابپتثجچحخدذرزژسشصضطظعغفقکگمنوهی۰۱۲۳۴۵۶۷۸۹][]]","");
                         FileHelper helper = new FileHelper(outputFolder);
-                        helper.createFile(String.format("%02d", i), data);
+                        String name = "04_fa_"+i;
+                        helper.createFile(name,data);
                         progressBar.setValue(i+1);
                     }
                     isCollecting = false;
